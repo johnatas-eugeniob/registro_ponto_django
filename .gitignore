@@ -1,0 +1,8 @@
+**/venv
+.dockerfile
+Dockerfile
+fly.toml
+.github/
+.dockerignore
+litefs.yml
+rp_projeto/static/cred.json
