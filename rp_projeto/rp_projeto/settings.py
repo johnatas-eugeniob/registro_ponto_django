@@ -22,22 +22,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_7!9(u#rhh*9rw0nc6mabo4k)8m6c!$kyffdy1e7&(oghrnct0'
+SECRET_KEY = '...'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = ['resgistro-de-ponto-web-4-0.fly.dev']
+ALLOWED_HOSTS = '...'
 
-CSRF_TRUSTED_ORIGINS = ['https://resgistro-de-ponto-web-4-0.fly.dev']
+CSRF_TRUSTED_ORIGINS = ['...']
 
 CSRF_FAILURE_VIEW = 'rp_app.views.csrf_failure'
 
-CSRF_COOKIE_DOMAIN = 'resgistro-de-ponto-web-4-0.fly.dev'
+CSRF_COOKIE_DOMAIN = '...'
 CSRF_COOKIE_SECURE = True
 
-SESSION_COOKIE_DOMAIN = 'resgistro-de-ponto-web-4-0.fly.dev'
+SESSION_COOKIE_DOMAIN = '...'
 SESSION_COOKIE_SECURE = True
 
 #SECURE_SSL_REDIRECT = False
