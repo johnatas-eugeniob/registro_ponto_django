@@ -58,7 +58,7 @@ def login_qrcode(request):
                 #Caso não encontre um User com a matricula inserida no "username" tente!
                 try:
                     #auth da API
-                    auth_url = "https://api.pessoas.loggi.com/v1/token"
+                    auth_url = "https://api..."
                     auth_payload = {
                         'username': username_api,
                         'password': password_api,
@@ -76,7 +76,7 @@ def login_qrcode(request):
 
                         if access_token:
                             # Agora faz a chamada para a API que retorna o nome e email
-                            api_url = f"https://api.pessoas.loggi.com/v1/s3/qr_code?qr_token={username}"
+                            api_url = f"https://api...qr_token={username}"
                             headers = {
                                 'Authorization': f'Bearer {access_token}',
                             }
@@ -207,7 +207,7 @@ def exportar_para_novos_users(request, new_user):
     creds = ServiceAccountCredentials.from_json_keyfile_name(cred_path, scope)
     client = gspread.authorize(creds)
 
-    spreadsheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1t07F1k_lgrsc-7K9hRWyiaCgX5hoj7wj-2CuDoY15-o/edit?usp=sharing')
+    spreadsheet = client.open_by_url('https://docs.google.com/spreadsheets...')
     
     # Nome da aba que você deseja usar
     aba_name = 'novos_users'  # Altere isso para o nome da aba que você deseja
@@ -234,7 +234,7 @@ def exportar_para_google_sheets(request):
     creds = ServiceAccountCredentials.from_json_keyfile_name(cred_path, scope)
     client = gspread.authorize(creds)
 
-    spreadsheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1t07F1k_lgrsc-7K9hRWyiaCgX5hoj7wj-2CuDoY15-o/edit?usp=sharing')
+    spreadsheet = client.open_by_url('https://docs.google.com/spreadsheets...')
     sheet = spreadsheet.sheet1
 
     # Buscar apenas as últimas duas marcações do usuário (Entrada e Saída)
