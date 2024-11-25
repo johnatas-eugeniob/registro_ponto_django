@@ -26,7 +26,7 @@ sem comprometer suas demandas ou a eficiência no trabalho.
 <ol>
 	<li>Clone o repositório:</li>
 	<ul>
-		<li>git clone https://github.com/seu-usuario/nome-do-repositorio.git</li>
+		<li>git clone https://github.com/iTzKoringaF4/rp_loggi.git</li>
 		<li>cd nome-do-repositorio</li>
 	</ul>
 	<li>Crie um ambiente virtual:</li>
