@@ -51,8 +51,14 @@ sem comprometer suas demandas ou a eficiência no trabalho.
 </ol>
 <h3>Contato</h3>
 <ul>
-<li>Autor: Johnatas B.E</li>
-<li>Email: johnataseugenio@gmail.com</li>
-<li>GitHub: </li>
+	<li>Autor: Johnatas B.E</li>
+	<li>Linkedin: 
+		<a href="https://www.linkedin.com/in/johnatas-belchior-eugenio-6746502a2?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_skills_details%3Bqc4Cx33%2BT42Owjt0lMM9oA%3D%3D" target="_blank" rel="noopener noreferrer">Johnatas Belchior Eugenio
+		</a>
+	</li>
+	<li>Email: <a href="mailto:johnataseugenio@gmail.com?subject=Contato%20via%20GitHub&body=Olá%20Johnatas,%20encontrei%20seu%20perfil%20no%20GitHub%20e%20gostaria%20de%20conversar.">
+    Envie-me um e-mail
+</a>
+</li>
 </ul>
 
