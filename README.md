@@ -49,3 +49,10 @@ sem comprometer suas demandas ou a eficiência no trabalho.
 		<li>python manage.py runserver</li>
 	</ul>
 </ol>
+<h3>Contato</h3>
+<ul>
+<li>Autor: Johnatas B.E</li>
+<li>Email: johnataseugenio@gmail.com</li>
+<li>GitHub: </li>
+</ul>
+
