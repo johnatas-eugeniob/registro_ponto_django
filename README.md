@@ -9,8 +9,7 @@ sem comprometer suas demandas ou a eficiência no trabalho.
 <li>Registro de ponto (entrada, saída e intervalos).</li>
 <li>Autenticação: Login seguro utilizando o sistema de usuários do Django</li>
 <li>Gerenciamento de usuários: Diferenciação entre perfis de colaboradores e administradores.</li>
-<li>Painel administrativo para gerenciar usuários e registros.</li>
-<li>Painel administrativo: Visualização e edição de dados por administradores.</li>
+<li>Painel administrativo para gerenciar usuários, registros, visualização e edição de dados por administradores.</li>
 <li>Exportação de relatórios para sua planilha online (gsheets)</li>
 </ul>
 <h3>🚀 Tecnologias Utilizadas</h3>
