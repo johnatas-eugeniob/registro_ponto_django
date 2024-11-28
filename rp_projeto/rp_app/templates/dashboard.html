@@ -1,0 +1,88 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcar Ponto</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/lex_favico.ico' %}"/>
+</head>
+<body>
+    <center>
+        <h1>Olá! {{request.user.first_name}}</h1>
+        <!--<h3>Seu nome está incorreto? Peça para o seu líder entrar em contato com:</h3>-->
+    </center>
+    <div class="form-group">
+        <form action="{% url 'marcador' %}" method="POST">{%csrf_token%}
+            <div id="clock"></div>
+            <select name="choice_tipo" class="form-control" id="selecao_deslocamento_tipo" required onchange="removeJustification()">
+                <option value="">Tipo</option>
+                <option value="Entrada">Entrada</option>
+                <option value="Saida">Saida</option>
+            </select>            
+            <br>
+            <select name="choice_para_onde" class="form-control" id="selecao_deslocamento_para_onde" required>
+                <option value="">Para</option>
+                <option value="Infeed Small Loop">infeed Small Loop</option>
+                <option value="Recebimento">Recebimento</option>
+                <option value="Ensacamento">Ensacamento</option>
+                <option value="Ensacamento Small Loop">Ensacamento Small Loop</option>
+                <option value="Indução Small Loop">Indução Small Loop</option>
+                <option value="Infeed Sorter Linear">Infeed Sorter Linear</option>
+                <option value="Ensacamento Sorter Linear">Ensacamento Sorter Linear</option>
+                <option value="Rejeito Sorter Linear">Rejeito Sorter Linear</option>
+                <option value="Ensacamento Big Loop">Ensacamento Big Loop</option>
+                <!--<option value="Triagem">Triagem</option>
+                <option value="Armazenagem">Armazenagem</option>
+                <option value="Expedição">Expedição</option>
+                <option value="Avarias/Descarte">Avarias/Descarte</option>
+                <option value="Salvados">Salvados</option>
+                <option value="Expedição">Expedição</option>
+                <option value="Redespacho">Redespacho</option>-->
+            </select>
+            <br>
+            <select name="choice_just" class="form-control" id="selecao_justificativa" style="display: none;">
+                <option value="N/A">Selecione uma Justificativa</option>
+                <option value="Deslocamento de Posto">Deslocamento de Posto</option>
+                <option value="Almoço">Almoço</option>
+                <option value="Pausa">Pausa</option>
+            </select>            
+            <br>
+            <div class="container-button">                        
+                <input type="submit" value="Marcar" class="btn btn-success">
+            </div>
+            <div class="nav-links">
+                <a class="link_branco" href="{% url 'logout' %}"><i class="bi bi-box-arrow-left"></i> Sair</a>
+            </div>
+        </form>
+    </div>
+    <script defer>
+        function removeJustification() {
+            const response = document.getElementById('selecao_deslocamento_tipo');
+            const justificativa = document.getElementById('selecao_justificativa');
+            
+            if (response.value === 'Saida') {
+                justificativa.style.display = 'block';
+            } else {
+                justificativa.style.display = 'none';
+            }
+        }        
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
+        }
+    
+        setInterval(updateClock, 1000);
+        window.onload = updateClock;
+    </script>
+</body>
+</html>
