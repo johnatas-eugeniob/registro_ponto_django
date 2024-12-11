@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os 
+import os
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -96,13 +96,18 @@ WSGI_APPLICATION = 'rp_projeto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+DATABASE_URL= 'postgres://resgistro_de_ponto_web_4_0:XbXdSVK7aWKW17B@pg-rp.flycast:5432/resgistro_de_ponto_web_4_0?sslmode=disable'
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+   "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": 'resgistro-de-ponto-web-4-0',  
+        "USER": 'resgistro-de-ponto-web-4-0',
+        "PASSWORD": 'XbXdSVK7aWKW17B',
+        "HOST": 'pg-rp.internal',
+        "PORT": '5432',  
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
