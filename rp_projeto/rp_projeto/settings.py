@@ -22,23 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_7!9(u#rhh*9rw0nc6mabo4k)8m6c!$kyffdy1e7&(oghrnct0'
+SECRET_KEY = '***'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = ['resgistro-de-ponto-web-4-0.fly.dev']
-
-CSRF_TRUSTED_ORIGINS = ['https://resgistro-de-ponto-web-4-0.fly.dev']
-
-CSRF_FAILURE_VIEW = 'rp_app.views.csrf_failure'
-
-CSRF_COOKIE_DOMAIN = 'resgistro-de-ponto-web-4-0.fly.dev'
-CSRF_COOKIE_SECURE = True
-
-SESSION_COOKIE_DOMAIN = 'resgistro-de-ponto-web-4-0.fly.dev'
-SESSION_COOKIE_SECURE = True
+ALLOWED_HOSTS = ['*']
 
 #SECURE_SSL_REDIRECT = False
 
@@ -96,16 +86,10 @@ WSGI_APPLICATION = 'rp_projeto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASE_URL= 'postgres://resgistro_de_ponto_web_4_0:XbXdSVK7aWKW17B@pg-rp.flycast:5432/resgistro_de_ponto_web_4_0?sslmode=disable'
-
 DATABASES = {
-   "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": 'resgistro-de-ponto-web-4-0',  
-        "USER": 'resgistro-de-ponto-web-4-0',
-        "PASSWORD": 'XbXdSVK7aWKW17B',
-        "HOST": 'pg-rp.internal',
-        "PORT": '5432',  
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # Localização do arquivo do banco de dados SQLite
     }
 }
 
