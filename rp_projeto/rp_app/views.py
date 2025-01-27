@@ -40,8 +40,8 @@ def login(request):
 
 def login_qrcode(request):
     #credenciais
-    username_api = "******"
-    password_api = "****"
+    username_api = "gestao_qualidade"
+    password_api = "tj3hSmf7oxKmDinhwjX6wnZf1Gc"
     scope = "qr"
 
     if request.method == "POST":
@@ -58,7 +58,7 @@ def login_qrcode(request):
                 #Caso não encontre um User com a matricula inserida no "username" tente!
                 try:
                     #auth da API
-                    auth_url = "****"
+                    auth_url = "https://api.pessoas.loggi.com/v1/token"
                     auth_payload = {
                         'username': username_api,
                         'password': password_api,
@@ -76,7 +76,7 @@ def login_qrcode(request):
 
                         if access_token:
                             # Agora faz a chamada para a API que retorna o nome e email
-                            api_url = f"****"
+                            api_url = f"https://api.pessoas.loggi.com/v1/s3/qr_code?qr_token={username}"
                             headers = {
                                 'Authorization': f'Bearer {access_token}',
                             }
