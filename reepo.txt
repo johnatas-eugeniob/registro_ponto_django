@@ -1,0 +1,73 @@
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+# SECURITY WARNING: don't run with debug turned on in production!
+ALLOWED_HOSTS = ['resgistro-de-ponto-web-4-0.fly.dev']
+
+CSRF_TRUSTED_ORIGINS = ['https://resgistro-de-ponto-web-4-0.fly.dev']
+
+CSRF_FAILURE_VIEW = 'rp_app.views.csrf_failure'
+
+CSRF_COOKIE_DOMAIN = 'resgistro-de-ponto-web-4-0.fly.dev'
+CSRF_COOKIE_SECURE = True
+
+SESSION_COOKIE_DOMAIN = 'resgistro-de-ponto-web-4-0.fly.dev'
+SESSION_COOKIE_SECURE = True
+
+
+
+#Fazer o static da maneira certa
+python manage.py collectstatic --noinput --clear --no-post-process
+
+#---------------------------------------------------------------------
+Validaçao do "exportar"
+def exportar_para_google_sheets(request):
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cred_path = os.path.join(BASE_DIR, 'static', 'cred.json')
+    
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name(cred_path, scope)
+    client = gspread.authorize(creds)
+
+    spreadsheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1t07F1k_lgrsc-7K9hRWyiaCgX5hoj7wj-2CuDoY15-o/edit?usp=sharing')
+    sheet = spreadsheet.sheet1
+
+    # Buscar apenas as últimas duas marcações do usuário (Entrada e Saída)
+    marcacoes = HorasMarcadas.objects.filter(nome_marcador=request.user).order_by('-hora_marcada')[:2]
+
+    # Se houver menos de duas marcações, não exporta
+    if len(marcacoes) < 2:
+        messages.error(request, "Não há marcações suficientes para exportar.")
+        return render(request, 'exportar.html')
+
+    # Paire as duas últimas marcações (Entrada e Saída)
+    entrada = marcacoes[1]
+    saida = marcacoes[0]
+
+    # Verifica se o par é válido (Entrada e Saída)
+    if entrada.tipo == 'Entrada' and saida.tipo == 'Saida':
+        full_name = f"{entrada.nome_marcador.first_name} {entrada.nome_marcador.last_name}"
+        email = entrada.nome_marcador.email
+        total_trabalhadas = saida.hora_marcada - entrada.hora_marcada
+
+        # Preparar os dados para inserir uma nova linha
+        nova_linha = [
+            full_name,
+            email,
+            entrada.nome_marcador.username,
+            entrada.tipo,
+            entrada.hora_marcada.strftime("%d/%m/%Y %H:%M:%S"),
+            entrada.para_onde,
+            saida.tipo,
+            saida.hora_marcada.strftime("%d/%m/%Y %H:%M:%S"),
+            saida.para_onde,
+            str(total_trabalhadas),
+        ]
+
+        # Obtém o índice da próxima linha vazia
+        next_row = len(sheet.get_all_values()) + 1
+        sheet.insert_row(nova_linha, next_row)
+    else:
+        pass
+
+        DATABASE_URL= 'postgres://resgistro_de_ponto_web_4_0:XbXdSVK7aWKW17B@pg-rp.flycast:5432/resgistro_de_ponto_web_4_0?sslmode=disable'

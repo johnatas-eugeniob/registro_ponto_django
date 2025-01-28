@@ -85,11 +85,22 @@ WSGI_APPLICATION = 'rp_projeto.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+"""
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',  # Localização do arquivo do banco de dados SQLite
+        }
+    }
+"""
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Localização do arquivo do banco de dados SQLite
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'registro-de-ponto',  # Substitua pelo nome do seu banco de dados
+        'USER': 'postgres',  # Seu usuário PostgreSQL
+        'PASSWORD': 'qKgULqWN5d8NFxK',       # Sua senha PostgreSQL
+        'HOST': 'registro-de-ponto.cvmyeoa080g4.us-east-2.rds.amazonaws.com',#Ou IP do servidor PostgreSQL
+        'PORT': '5432',             # Porta padrão do PostgreSQL
     }
 }
 

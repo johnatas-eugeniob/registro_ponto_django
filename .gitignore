@@ -6,4 +6,3 @@ fly.toml
 .dockerignore
 litefs.yml
 rp_projeto/static/cred.json
-zteste.txt

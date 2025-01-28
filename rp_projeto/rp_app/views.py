@@ -132,27 +132,40 @@ def marcador(request):
         justificativa = request.POST.get('choice_just')
 
         if tipo and para_onde and justificativa:
-            usuario = request.user         
+            usuario = request.user
+
+            # Recuperar a última marcação do usuário
+            ultima_marcacao = HorasMarcadas.objects.filter(nome_marcador=usuario).order_by('-hora_marcada').first()
+
+            # Verificar se o tipo da última marcação é igual ao atual
+            if ultima_marcacao and ultima_marcacao.tipo == tipo:
+                if tipo == 'Entrada':
+                    messages.error(request, "Você não pode marcar uma entrada até que marque a saída atual.")
+                elif tipo == 'Saída':
+                    messages.error(request, "Você não pode marcar uma saída até que marque a entrada atual.")
+                return render(request, 'dashboard.html')
+
+            # Criar uma nova marcação
             marcar = HorasMarcadas(
-                nome_marcador = request.user,
-                hora_marcada = timezone.now(),
-                tipo = tipo,
-                para_onde = para_onde,
-                justificativa = justificativa
+                nome_marcador=usuario,
+                hora_marcada=timezone.now(),
+                tipo=tipo,
+                para_onde=para_onde,
+                justificativa=justificativa
             )
             marcar.save()
             messages.success(request, 'Marcação feita com sucesso!')
-            
+
             # Chama a função de exportação para o Google Sheets
             exportar_para_google_sheets(request)
 
             return redirect('logout')
         else:
-            messages.error(request,"Preencha todos os campos para proseguir!")
+            messages.error(request, "Preencha todos os campos para proseguir!")
             return render(request, 'dashboard.html')
     else:
-        messages.error(request,"Envie o formulario novamente")
-        return  render(request, 'dashboard.html')
+        messages.error(request, "Envie o formulário novamente.")
+        return render(request, 'dashboard.html')
     
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -238,27 +251,43 @@ def exportar_para_google_sheets(request):
     sheet = spreadsheet.sheet1
 
     # Buscar apenas as últimas duas marcações do usuário (Entrada e Saída)
-    marcacoes = HorasMarcadas.objects.filter(nome_marcador=request.user).order_by('-hora_marcada')[:1]
+    marcacoes = HorasMarcadas.objects.filter(nome_marcador=request.user).order_by('-hora_marcada')[:2]
 
-    for marcacao in marcacoes:
+    # Se houver menos de duas marcações, não exporta
+    if len(marcacoes) < 2:
+        messages.error(request, "Não há marcações suficientes para exportar.")
+        return render(request, 'exportar.html')
 
-        email = marcacao.nome_marcador.email
+    # Paire as duas últimas marcações (Entrada e Saída)
+    entrada = marcacoes[1]
+    saida = marcacoes[0]
+
+    # Verifica se o par é válido (Entrada e Saída)
+    if entrada.tipo == 'Entrada' and saida.tipo == 'Saida':
+        full_name = f"{entrada.nome_marcador.first_name} {entrada.nome_marcador.last_name}"
+        email = entrada.nome_marcador.email
+        total_trabalhadas = saida.hora_marcada - entrada.hora_marcada
 
         # Preparar os dados para inserir uma nova linha
         nova_linha = [
-            marcacao.nome_marcador.first_name,
+            full_name,
             email,
-            marcacao.nome_marcador.username,
-            marcacao.tipo,
-            marcacao.hora_marcada.strftime("%d/%m/%Y"),
-            marcacao.hora_marcada.strftime("%H:%M:%S"),
-            marcacao.para_onde,
-            marcacao.justificativa
+            entrada.nome_marcador.username,
+            entrada.tipo,
+            entrada.hora_marcada.strftime("%d/%m/%Y %H:%M:%S"),
+            entrada.para_onde,
+            saida.tipo,
+            saida.hora_marcada.strftime("%d/%m/%Y %H:%M:%S"),
+            saida.para_onde,
+            saida.justificativa,
+            str(total_trabalhadas),
         ]
 
         # Obtém o índice da próxima linha vazia
         next_row = len(sheet.get_all_values()) + 1
         sheet.insert_row(nova_linha, next_row)
+    else:
+        pass
 
 #-----------------------------------------------------------------------------------------------------------------------
 
